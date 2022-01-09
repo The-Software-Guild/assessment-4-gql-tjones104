@@ -15,7 +15,7 @@
 }
 
 .navbar h1 {
-  color: #09bc8a;
+  color: #000000;
 }
 
 .navbar .links {
@@ -29,7 +29,7 @@
 }
 
 .navbar a:hover {
-  color: #09bc8a;
+  color: blue;
 }
 
 .main {
@@ -38,11 +38,139 @@
   padding: 20px;
 }
 
+.issue-header {
+  display: flexbox;
+  margin: auto;
+  padding-bottom: 10px;
+}
+
+.back-button {
+  max-width: 520px;
+  width: 100%;
+  background-color: rgba(241, 0, 0, 0.712);
+  color: black;
+  border: 1px solid rgb(0, 0, 0);
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: rgba(163, 0, 0, 0.795);
+}
+.issue-container {
+  display: flex;
+  flex-direction: row;
+  padding: 5px 10px 5px 10px;
+  justify-content: flex-start;
+  max-width: 500px;
+  margin: auto;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #fafafa;
+  box-shadow: 1px 3px 5px #646464;
+}
+
+.issue-container:hover {
+  box-shadow: 1px 3px 5px #000000;
+}
+
+.issue-body {
+  padding: 10px 20px 5px 10px;
+  text-align: left;
+}
+
+.issue-body h3 {
+  font-size: 25px;
+}
+
+.issue-body h4 {
+  font-size: 13px;
+}
+
+.like {
+  padding-top: 15px;
+}
+
+.comment-box {
+  padding-top: 15px;
+}
+
+.comment-button {
+  padding: 3px;
+  margin: 0px;
+  border-radius: 0%;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.comment-button:hover {
+  background-color: rgba(216, 216, 216, 0.418);
+}
+
+.comments-container {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 10px 5px 10px;
+  max-width: 500px;
+  margin: auto;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #fafafa;
+  box-shadow: 1px 3px 5px #646464;
+}
+
+.comments {
+  text-align: left;
+  padding: 10px;
+}
+
+.comments p {
+  padding-left: 20px;
+}
+
+.post-comment {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 10px 5px 10px;
+  max-width: 500px;
+  margin: auto;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #fafafa;
+  box-shadow: 1px 3px 5px #646464;
+}
+
+.like-button {
+  padding: 3px;
+  margin: 0px;
+  border-radius: 50%;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.like-button:hover {
+  background-color: rgba(255, 0, 0, 0.315);
+}
+
+.liked-button {
+  padding: 3px;
+  margin: 0px;
+  border-radius: 50%;
+  background-color: red;
+  color: black;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.liked-button:hover {
+  background-color: rgba(255, 0, 0, 0.315);
+}
+
 .get-list {
   padding: 5px 10px;
   margin: auto;
   border-bottom: 1px solid #fafafa;
-  box-shadow: 1px 3px 5px #76c893;
+  box-shadow: 1px 3px 5px #a1a1a1;
 }
 
 .show-list {
@@ -52,28 +180,19 @@
   border-collapse: collapse;
 }
 
-.show-list th,
-tr,
-td {
-  padding: 10px 16px;
-  margin: 40px auto;
-  text-align: center;
-  border: 1px solid #76c893;
-  border-collapse: collapse;
-}
-
 .post-item {
+  max-width: 600px;
   padding: 10px 50px;
   margin: 0 auto;
   text-align: center;
-  box-shadow: 1px 3px 5px #76c893;
+  box-shadow: 1px 3px 5px #a1a1a1;
 }
 
 .put-item {
   width: 100%;
   align-items: center;
   text-align: center;
-  box-shadow: 1px 3px 5px #76c893;
+  box-shadow: 1px 3px 5px #a1a1a1;
 }
 
 .put-item form {
@@ -90,7 +209,7 @@ td {
   padding: 10px 50px;
   margin: 0 auto;
   text-align: center;
-  box-shadow: 1px 3px 5px #76c893;
+  box-shadow: 1px 3px 5px #a1a1a1;
 }
 
 .delete-item form {
@@ -180,15 +299,17 @@ td {
   width: 15%;
   margin-left: 10px;
 }
+.post-form {
+  max-width: 1200px;
+}
 
 h2 {
-  color: #09bc8a;
+  color: #000000;
   margin-top: auto;
 }
 
 form {
   max-width: 600px;
-  margin: 40px auto;
 }
 
 label {
@@ -201,18 +322,17 @@ select {
   width: 100%;
   padding: 6px 10px;
   margin: 10px 0;
-  border: 1px solid #09bc8a;
+  border: 1px solid #b1b1b1;
   box-sizing: border-box;
   display: block;
-  background-color: #ecfef9;
 }
 
 button {
   background: #09bc8a;
   color: #fff;
   border: 0;
-  padding: 10px;
-  margin: 15px;
+  padding: 5px;
+  margin: 5px;
   border-radius: 20px;
   cursor: pointer;
 }
@@ -221,7 +341,7 @@ button:hover {
   background: #079c72;
 }
 
-@media screen and (max-width: 1160px) {
+@media screen and (max-width: 650px) {
   .navbar {
     padding: 10px;
   }
@@ -239,7 +359,7 @@ button:hover {
   td {
     padding: 0px 0px;
     margin: 0px;
-    border: 1px solid #76c893;
+    border: 1px solid #a1a1a1;
     border-collapse: collapse;
   }
   thead {
@@ -259,7 +379,7 @@ button:hover {
     padding: 10px 50px;
     margin: 0 auto;
     text-align: center;
-    box-shadow: 1px 3px 5px #76c893;
+    box-shadow: 1px 3px 5px #a1a1a1;
   }
 
   .overlay {

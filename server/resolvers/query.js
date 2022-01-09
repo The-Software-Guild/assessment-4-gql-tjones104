@@ -38,7 +38,11 @@ module.exports = {
   },
   getOneIssue: async (_, { id }) => {
     try {
-      const issue = await Issue.findById(id);
+      const issue = await Issue.findById(id).populate([
+        "postedBy",
+        { path: "comments", populate: { path: "commentedBy" } },
+        { path: "likes", populate: { path: "likedBy" } },
+      ]);
       if (issue) {
         return issue;
       } else {

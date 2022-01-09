@@ -24,7 +24,7 @@ const typeDefs = gql`
 
   type Comment {
     id: ID!
-    createdAt: String!
+    createdAt: DateTime!
     description: String!
     commentedBy: User!
   }

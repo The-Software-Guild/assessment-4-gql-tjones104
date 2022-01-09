@@ -1,8 +1,13 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import Navbar from "./navbar";
-import Home from "./home";
-// import GetItems from "./getItems";
-// import PostItems from "./postItems";
+import GetIssues from "./getIssues";
+import GetOneIssue from "./getOneIssue";
+import PostIssue from "./postIssue";
 import Register from "./register";
 import Login from "./login";
 import UnknownPage from "./unknownpage";
@@ -41,29 +46,19 @@ class App extends Component {
           <Navbar token={this.state.token} handleToken={this.handleToken} />
           <div className="main">
             <Routes>
-              <Route exact path="/" element={<Home />}></Route>
-              {/* <Route
-                path="/GetItems"
-                element={
-                  this.state.token === "" ? (
-                    <Navigate to="/login" />
-                  ) : (
-                    <GetItems />
-                  )
-                }
-              >
-                <Route path=":id" element={<GetItems />}></Route>
-              </Route>
+              <Route exact path="/" element={<GetIssues />}></Route>
+              <Route exact path="/GetIssues" element={<GetIssues />}></Route>
+              <Route path="/GetOneIssue" element={<GetOneIssue />}></Route>
               <Route
-                path="/PostItems"
+                path="/PostIssue"
                 element={
                   this.state.token === "" ? (
                     <Navigate to="/login" />
                   ) : (
-                    <PostItems />
+                    <PostIssue handleToken={this.handleToken} />
                   )
                 }
-              ></Route> */}
+              ></Route>
               <Route
                 path="/Login"
                 element={<Login handleToken={this.handleToken} />}

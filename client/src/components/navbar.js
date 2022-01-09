@@ -7,8 +7,8 @@ const Navbar = (props) => {
         <h1>Climate Action 101</h1>
       </Link>
       <div className="links">
-        <Link to="/">Home</Link>
         <Link to="/getIssues">Issues</Link>
+        <Link to="/postIssue">Add Issue</Link>
         <Link to="/login">Login</Link>
         <Link to="/register">Register</Link>
       </div>
@@ -19,10 +19,9 @@ const Navbar = (props) => {
         <h1>Climate Action 101</h1>
       </Link>
       <div className="links">
-        <Link to="/">Home</Link>
         <Link to="/getIssues">Issues</Link>
-        <Link to="/postIssues">Add Issue</Link>
-        <Link to="/" onClick={() => props.handleToken("")}>
+        <Link to="/postIssue">Add Issue</Link>
+        <Link to="/login" onClick={() => props.handleToken("")}>
           Logout
         </Link>
       </div>
