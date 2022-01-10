@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { AuthContext } from "./auth";
 
-const Navbar = (props) => {
-  return props.token === "" ? (
+const Navbar = () => {
+  const { user, logout } = useContext(AuthContext);
+  return !user.user ? (
     <nav className="navbar">
       <Link to="/">
         <h1>Climate Action 101</h1>
@@ -23,7 +26,7 @@ const Navbar = (props) => {
         <Link to="/getIssues">Issues</Link>
         <Link to="/postIssue">Add Issue</Link>
         <Link to="/UserIssues">Your Issues</Link>
-        <Link to="/login" onClick={() => props.handleToken("")}>
+        <Link to="/login" onClick={logout}>
           Logout
         </Link>
       </div>

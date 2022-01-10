@@ -59,12 +59,19 @@ const GetIssues = () => {
       </div>
       {!fetchIssue ? (
         <div>
-          {issues &&
-            issues.map((issue) => (
-              <div key={issue.id} onClick={(e) => setfetchIssue(issue)}>
-                <Issue issue={issue} />
-              </div>
-            ))}
+          <div>
+            {issues &&
+              issues.map((issue) => (
+                <div
+                  className="issue-box"
+                  key={issue.id}
+                  onClick={(e) => setfetchIssue(issue)}
+                >
+                  <Issue issue={issue} />
+                </div>
+              ))}
+          </div>
+          {issues.length === 0 && <p className="noItems">No issues found</p>}
         </div>
       ) : (
         <div>

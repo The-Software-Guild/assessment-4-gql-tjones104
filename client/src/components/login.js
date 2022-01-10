@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { gql, useMutation } from "@apollo/client";
+import { AuthContext } from "./auth";
 
 const LOGIN_MUTATION = gql`
   mutation LoginMutation($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
+      user {
+        id
+        username
+        email
+      }
     }
   }
 `;
 
-const Login = (props) => {
+const Login = () => {
+  const context = useContext(AuthContext);
   const navigate = useNavigate();
   const [formState, setFormState] = useState({
     email: "",
@@ -23,7 +30,7 @@ const Login = (props) => {
       email: formState.email,
     },
     onCompleted: ({ login }) => {
-      props.handleToken(login.token);
+      context.login(login);
       navigate("/");
     },
   });

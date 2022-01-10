@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { gql, useMutation } from "@apollo/client";
+import { AuthContext } from "./auth";
 
 const REGISTER_MUTATION = gql`
   mutation RegisterMutation(
@@ -10,11 +11,17 @@ const REGISTER_MUTATION = gql`
   ) {
     register(username: $username, password: $password, email: $email) {
       token
+      user {
+        id
+        username
+        email
+      }
     }
   }
 `;
 
-const Register = (props) => {
+const Register = () => {
+  const context = useContext(AuthContext);
   const navigate = useNavigate();
   const [formState, setFormState] = useState({
     name: "",
@@ -28,7 +35,7 @@ const Register = (props) => {
       email: formState.email,
     },
     onCompleted: ({ register }) => {
-      props.handleToken(register.token);
+      context.login(register);
       navigate("/");
     },
   });

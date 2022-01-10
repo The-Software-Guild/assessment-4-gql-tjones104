@@ -1,8 +1,7 @@
 import React from "react";
 import { MockedProvider } from "@apollo/client/testing";
-import { ISSUE_QUERY, GetIssues } from "./../getIssues";
+import GetIssues, { ISSUE_QUERY } from "./../getIssues";
 import renderer from "react-test-renderer";
-import TestRenderer from "react-test-renderer";
 
 const mocks = [
   {

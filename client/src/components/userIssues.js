@@ -65,6 +65,7 @@ const UserIssues = () => {
                 <Issue issue={issue} />
               </div>
             ))}
+          {issues.length === 0 && <p className="noItems">No issues found</p>}
         </div>
       ) : (
         <div>
