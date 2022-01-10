@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { gql, useMutation } from "@apollo/client";
+import { AuthContext } from "./auth";
 
 const LIKE_MUTATION = gql`
   mutation LikeMutation($issueId: ID!) {
@@ -18,18 +19,11 @@ const DISLIKE_MUTATION = gql`
   }
 `;
 
-const VoteButtons = ({
-  user,
-  id,
-  likes,
-  dislikes,
-  likeCount,
-  dislikeCount,
-}) => {
+const VoteButtons = ({ id, likes, dislikes, likeCount, dislikeCount }) => {
   const [likestyle, setLikestyle] = useState("like-button");
   const [dislikestyle, setDislikestyle] = useState("dislike-button");
   const navigate = useNavigate();
-  const token = localStorage.getItem("Token");
+  const { user } = useContext(AuthContext);
 
   const [likePost] = useMutation(LIKE_MUTATION, {
     variables: {
@@ -44,21 +38,25 @@ const VoteButtons = ({
   });
 
   useEffect(() => {
-    if (token) {
-      if (user && likes.find((like) => like.likedBy.id === user._id)) {
+    if (user.user) {
+      let userId = user.user.id;
+      if (!userId) {
+        userId = user.user._id;
+      }
+      if (user.user && likes.find((like) => like.likedBy.id === userId)) {
         setLikestyle("liked-button");
       } else setLikestyle("like-button");
       if (
-        user &&
-        dislikes.find((dislike) => dislike.dislikedBy.id === user._id)
+        user.user &&
+        dislikes.find((dislike) => dislike.dislikedBy.id === userId)
       ) {
         setDislikestyle("disliked-button");
       } else setDislikestyle("dislike-button");
     }
-  }, [user, likes, dislikes, token]);
+  }, [likes, dislikes, user.user]);
 
   const handleLike = () => {
-    if (token) {
+    if (user.user) {
       setLikestyle("liked-button");
       if (likestyle === "like-button" && dislikestyle !== "disliked-button") {
         likePost();
@@ -81,7 +79,7 @@ const VoteButtons = ({
   };
 
   const handleDislike = () => {
-    if (token) {
+    if (user.user) {
       setDislikestyle("disliked-button");
       if (dislikestyle === "dislike-button" && likestyle !== "liked-button") {
         dislikePost();

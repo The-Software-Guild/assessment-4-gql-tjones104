@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import Comment from "./comment";
 import PostComment from "./postComment";
 import VoteButtons from "./voteButtons";
 import { useNavigate } from "react-router-dom";
-import jwtDecode from "jwt-decode";
+import { AuthContext } from "./auth";
 
 const Issue = ({
   issue,
@@ -17,27 +17,23 @@ const Issue = ({
     dislikeCount,
     commentCount,
   },
+  handlefetch,
 }) => {
   const navigate = useNavigate();
 
-  const token = localStorage.getItem("Token");
-  let { payload } = {};
   let today = new Date();
   let postDate = new Date(createdAt);
   let hours = Math.floor((today - postDate) / (1000 * 60 * 60));
   let minutes = Math.floor((today - postDate) / (1000 * 60));
   let seconds = Math.floor((today - postDate) / 1000);
 
-  if (localStorage.getItem("Token")) {
-    payload = jwtDecode(localStorage.getItem("Token"));
-  }
+  const { user } = useContext(AuthContext);
 
   return (
     <div>
       <div className="issue-container">
-        {token ? (
+        {user.user ? (
           <VoteButtons
-            user={payload.user}
             id={id}
             likes={issue.likes}
             dislikes={issue.dislikes}
@@ -53,7 +49,14 @@ const Issue = ({
             dislikeCount={dislikeCount}
           />
         )}
-        <div className="issue-body">
+        <div
+          className="issue-body"
+          onClick={(e) => {
+            if (handlefetch) {
+              handlefetch(issue);
+            }
+          }}
+        >
           <header className="header">
             <h3>{title}</h3>
 
@@ -73,7 +76,11 @@ const Issue = ({
             </h4>
           </header>
           <div>
-            <p>{description}</p>
+            {issue.comments ? (
+              <p>{description}</p>
+            ) : (
+              <p className="issue-preview">{description}</p>
+            )}
           </div>
           <div className="comment-box">
             <button className="comment-button ">
@@ -86,7 +93,7 @@ const Issue = ({
         <div>
           {issue.comments.length > 0 ? (
             <div>
-              {token ? (
+              {user.user ? (
                 <PostComment issueID={issue.id} />
               ) : (
                 <h3 onClick={(e) => navigate("/login")}>
@@ -108,7 +115,7 @@ const Issue = ({
               <div className="comments-container">
                 <h3>No comments yet! Be the first one to comment!</h3>
               </div>
-              {token ? (
+              {user.user ? (
                 <PostComment issueID={issue.id} />
               ) : (
                 <h3 onClick={(e) => navigate("/login")}>

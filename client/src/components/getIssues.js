@@ -47,6 +47,10 @@ const GetIssues = () => {
     issues = [...query.getIssues];
   }
 
+  const handlefetch = (issue) => {
+    setfetchIssue(issue);
+  };
+
   return (
     <div>
       <div className="issue-header">
@@ -62,12 +66,8 @@ const GetIssues = () => {
           <div>
             {issues &&
               issues.map((issue) => (
-                <div
-                  className="issue-box"
-                  key={issue.id}
-                  onClick={(e) => setfetchIssue(issue)}
-                >
-                  <Issue issue={issue} />
+                <div className="issue-box" key={issue.id}>
+                  <Issue issue={issue} handlefetch={handlefetch} />
                 </div>
               ))}
           </div>
