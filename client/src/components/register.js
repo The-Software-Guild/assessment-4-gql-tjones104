@@ -38,6 +38,9 @@ const Register = () => {
       context.login(register);
       navigate("/");
     },
+    onError: (error) => {
+      alert(error);
+    },
   });
 
   return (

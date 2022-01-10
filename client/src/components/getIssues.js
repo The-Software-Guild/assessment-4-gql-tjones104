@@ -24,6 +24,7 @@ export const ISSUE_QUERY = gql`
           id
         }
       }
+      voteCount
       likeCount
       dislikeCount
       commentCount

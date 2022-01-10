@@ -58,15 +58,41 @@ module.exports = {
     if (!payload) {
       throw new AuthenticationError("No Token");
     }
-    const likeCount = 0;
+    const voteCount = 0;
     const issue = await Issue.create({
       title: title,
       description: description,
       createdAt: new Date().toISOString(),
-      likeCount,
+      voteCount,
       postedBy: payload.user,
     });
     return issue;
+  },
+
+  updateIssue: async (_, { id, title, description }, context) => {
+    const { payload } = context;
+    if (!payload) {
+      throw new AuthenticationError("No Token");
+    }
+    try {
+      const issue = await Issue.findById(id);
+      if (issue) {
+        if (payload.user._id === issue.postedBy.valueOf()) {
+          const update = {
+            title: title,
+            description: description,
+          };
+          await issue.updateOne(update);
+          return "Post updated successfully";
+        } else {
+          throw new AuthenticationError("You are not the owner of the issue");
+        }
+      } else {
+        throw new Error("Issue not found");
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
   },
 
   deleteIssue: async (_, { id }, context) => {
@@ -154,15 +180,16 @@ module.exports = {
         issue.likes = issue.likes.filter(
           (like) => like.likedBy.valueOf() !== payload.user._id
         );
-        issue.likeCount--;
+        issue.voteCount = issue.likes.length - issue.dislikes.length;
       } else {
         // Like if not liked
         const likedBy = payload.user._id;
         issue.likes.push({
           likedBy,
         });
-        issue.likeCount++;
+        issue.voteCount = issue.likes.length - issue.dislikes.length;
       }
+
       await issue.save();
       return issue;
     } else {
@@ -183,19 +210,20 @@ module.exports = {
           (dislike) => dislike.dislikedBy.valueOf() === payload.user._id
         )
       ) {
-        // Unlike if liked
+        // Undislike if disliked
         issue.dislikes = issue.dislikes.filter(
           (dislike) => dislike.dislikedBy.valueOf() !== payload.user._id
         );
-        issue.likeCount++;
+        issue.voteCount = issue.likes.length - issue.dislikes.length;
       } else {
-        // Like if not liked
+        // disLike if not disliked
         const dislikedBy = payload.user._id;
         issue.dislikes.push({
           dislikedBy,
         });
-        issue.likeCount--;
+        issue.voteCount = issue.likes.length - issue.dislikes.length;
       }
+
       await issue.save();
       return issue;
     } else {
