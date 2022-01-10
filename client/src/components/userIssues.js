@@ -4,9 +4,9 @@ import { gql, useQuery } from "@apollo/client";
 import Issue from "./issue";
 import GetOneIssue from "./getOneIssue";
 
-export const ISSUE_QUERY = gql`
-  query IssueQuery {
-    getIssues {
+const USER_ISSUE_QUERY = gql`
+  query UserIssueQuery {
+    getUserIssues {
       id
       title
       description
@@ -31,26 +31,26 @@ export const ISSUE_QUERY = gql`
   }
 `;
 
-const GetIssues = () => {
+const UserIssues = () => {
   const [fetchIssue, setfetchIssue] = useState();
   const {
     data: query,
     loading,
     error,
-  } = useQuery(ISSUE_QUERY, { pollInterval: 100 });
+  } = useQuery(USER_ISSUE_QUERY, { pollInterval: 100 });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
   let issues = [];
   if (query) {
-    issues = [...query.getIssues];
+    issues = [...query.getUserIssues];
   }
 
   return (
     <div>
       <div className="issue-header">
-        <h2>Issues</h2>
+        <h2>Your Issues</h2>
         {fetchIssue && (
           <button className="back-button" onClick={(e) => setfetchIssue()}>
             Back
@@ -75,4 +75,4 @@ const GetIssues = () => {
   );
 };
 
-export default GetIssues;
+export default UserIssues;

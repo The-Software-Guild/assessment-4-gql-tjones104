@@ -23,7 +23,6 @@ const Login = (props) => {
       email: formState.email,
     },
     onCompleted: ({ login }) => {
-      //localStorage.setItem("Token", login.token);
       props.handleToken(login.token);
       navigate("/");
     },

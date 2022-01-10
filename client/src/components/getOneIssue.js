@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+
 import { gql, useQuery } from "@apollo/client";
 import Issue from "./issue";
 
@@ -21,7 +21,18 @@ const ONE_ISSUE_QUERY = gql`
           username
         }
       }
+      likes {
+        likedBy {
+          id
+        }
+      }
+      dislikes {
+        dislikedBy {
+          id
+        }
+      }
       likeCount
+      dislikeCount
       commentCount
     }
   }
@@ -37,6 +48,10 @@ const GetOneIssue = (issue) => {
       id: issue.id,
     },
   });
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
   let fetchedIssue;
   if (query) {
     fetchedIssue = query.getOneIssue;

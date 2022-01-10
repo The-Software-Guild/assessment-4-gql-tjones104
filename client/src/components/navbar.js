@@ -9,6 +9,7 @@ const Navbar = (props) => {
       <div className="links">
         <Link to="/getIssues">Issues</Link>
         <Link to="/postIssue">Add Issue</Link>
+        <Link to="/UserIssues">Your Issues</Link>
         <Link to="/login">Login</Link>
         <Link to="/register">Register</Link>
       </div>
@@ -21,6 +22,7 @@ const Navbar = (props) => {
       <div className="links">
         <Link to="/getIssues">Issues</Link>
         <Link to="/postIssue">Add Issue</Link>
+        <Link to="/UserIssues">Your Issues</Link>
         <Link to="/login" onClick={() => props.handleToken("")}>
           Logout
         </Link>

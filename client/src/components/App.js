@@ -7,6 +7,7 @@ import {
 import Navbar from "./navbar";
 import GetIssues from "./getIssues";
 import GetOneIssue from "./getOneIssue";
+import UserIssues from "./userIssues";
 import PostIssue from "./postIssue";
 import Register from "./register";
 import Login from "./login";
@@ -56,6 +57,16 @@ class App extends Component {
                     <Navigate to="/login" />
                   ) : (
                     <PostIssue handleToken={this.handleToken} />
+                  )
+                }
+              ></Route>
+              <Route
+                path="/UserIssues"
+                element={
+                  this.state.token === "" ? (
+                    <Navigate to="/login" />
+                  ) : (
+                    <UserIssues handleToken={this.handleToken} />
                   )
                 }
               ></Route>

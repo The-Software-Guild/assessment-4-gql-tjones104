@@ -22,7 +22,6 @@ const PostIssue = (props) => {
       description: formState.description,
     },
     onCompleted: () => {
-      props.handleToken(localStorage.getItem("Token"));
       navigate("/");
     },
   });

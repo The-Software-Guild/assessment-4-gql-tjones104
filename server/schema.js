@@ -18,7 +18,9 @@ const typeDefs = gql`
     postedBy: User!
     comments: [Comment]!
     likes: [Like]!
+    dislikes: [Dislike]!
     likeCount: Int!
+    dislikeCount: Int!
     commentCount: Int!
   }
 
@@ -34,10 +36,16 @@ const typeDefs = gql`
     likedBy: User!
   }
 
+  type Dislike {
+    id: ID!
+    dislikedBy: User!
+  }
+
   type Query {
     getUsers: [User]
     getOneUser(id: ID!): User
     getIssues: [Issue]
+    getUserIssues: [Issue]
     getOneIssue(id: ID!): Issue
   }
 
@@ -49,6 +57,7 @@ const typeDefs = gql`
     postComment(issueId: ID!, description: String!): Issue!
     deleteComment(issueId: ID!, commentId: ID!): Issue!
     likePost(issueId: ID!): Issue!
+    dislikePost(issueId: ID!): Issue!
   }
 
   type AuthPayload {

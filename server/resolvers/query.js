@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const Issue = require("../models/issue");
+const { AuthenticationError } = require("apollo-server-express");
 
 module.exports = {
   getUsers: async () => {
@@ -25,11 +26,32 @@ module.exports = {
   getIssues: async () => {
     try {
       const issues = await Issue.find()
-        .sort({ createdAt: -1 })
+        .sort({ likeCount: -1 })
         .populate([
           "postedBy",
           { path: "comments", populate: { path: "commentedBy" } },
           { path: "likes", populate: { path: "likedBy" } },
+          { path: "dislikes", populate: { path: "dislikedBy" } },
+        ]);
+      return issues;
+    } catch (err) {
+      throw new Error(err);
+    }
+  },
+  getUserIssues: async (_, args, context) => {
+    const { payload } = context;
+    if (!payload) {
+      throw new AuthenticationError("No Token");
+    }
+    const id = payload.user._id;
+    try {
+      const issues = await Issue.find({ postedBy: id })
+        .sort({ likeCount: -1 })
+        .populate([
+          "postedBy",
+          { path: "comments", populate: { path: "commentedBy" } },
+          { path: "likes", populate: { path: "likedBy" } },
+          { path: "dislikes", populate: { path: "dislikedBy" } },
         ]);
       return issues;
     } catch (err) {
@@ -42,6 +64,7 @@ module.exports = {
         "postedBy",
         { path: "comments", populate: { path: "commentedBy" } },
         { path: "likes", populate: { path: "likedBy" } },
+        { path: "dislikes", populate: { path: "dislikedBy" } },
       ]);
       if (issue) {
         return issue;

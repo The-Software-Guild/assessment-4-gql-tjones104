@@ -28,7 +28,6 @@ const Register = (props) => {
       email: formState.email,
     },
     onCompleted: ({ register }) => {
-      //localStorage.setItem("Token", register.token);
       props.handleToken(register.token);
       navigate("/");
     },

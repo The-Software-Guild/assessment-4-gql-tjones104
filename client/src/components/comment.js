@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 const Issue = ({
   comment,
@@ -15,24 +15,12 @@ const Issue = ({
   let minutes = Math.floor((today - postDate) / (1000 * 60));
   let seconds = Math.floor((today - postDate) / 1000);
 
-  //   if (title === "Issue 3") {
-  //     console.log(issue);
-  //   }
-
-  //   const handleLike = () => {
-  //     if (style === "like-button") {
-  //       setStyle("liked-button");
-  //     } else {
-  //       setStyle("like-button");
-  //     }
-
   return (
     <div className="comments">
       <h5>
-        {username} |{" "}
+        {username} |
         {seconds > 60 ? (
           <span>
-            {" "}
             {minutes > 60 ? (
               <span> {hours} hours ago </span>
             ) : (

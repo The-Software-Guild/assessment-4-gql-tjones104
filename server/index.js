@@ -12,12 +12,6 @@ const Query = require("./resolvers/query");
 const Mutation = require("./resolvers/mutation");
 const Issue = require("./resolvers/counts");
 
-// database connection startup
-mongoose
-  .connect(process.env.MONGO_LOCAL_CONN_URL)
-  .then((result) => console.log("Connected to the database"))
-  .catch((err) => console.log(err));
-
 // resolvers
 const resolvers = {
   Query,
@@ -25,9 +19,10 @@ const resolvers = {
   Issue,
 };
 
+const app = express();
+
 // apollo & express server startup logic
 const startApolloServer = async (typeDefs, resolvers) => {
-  const app = express();
   const server = new ApolloServer({
     typeDefs,
     resolvers,
@@ -40,9 +35,15 @@ const startApolloServer = async (typeDefs, resolvers) => {
   });
 
   // logger
-  // if (environment === "development") {
-  //   app.use(morgan("dev"));
-  // }
+  if (environment === "development") {
+    //app.use(morgan("dev"));
+  }
+
+  // database connection startup
+  await mongoose
+    .connect(process.env.MONGO_LOCAL_CONN_URL)
+    .then((result) => console.log("Connected to the database"))
+    .catch((err) => console.log(err));
 
   // application level middleware
   app.use(
@@ -64,5 +65,6 @@ const startApolloServer = async (typeDefs, resolvers) => {
   await new Promise((resolve) => app.listen(`${stage.port}`, resolve));
   console.log(`Server ready at http://localhost:8080${server.graphqlPath}`);
 };
-
 startApolloServer(typeDefs, resolvers);
+
+module.exports = app;

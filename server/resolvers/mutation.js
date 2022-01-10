@@ -6,7 +6,6 @@ const {
   UserInputError,
   AuthenticationError,
 } = require("apollo-server-express");
-const { post } = require("request");
 
 module.exports = {
   // User
@@ -59,10 +58,12 @@ module.exports = {
     if (!payload) {
       throw new AuthenticationError("No Token");
     }
+    const likeCount = 0;
     const issue = await Issue.create({
       title: title,
       description: description,
       createdAt: new Date().toISOString(),
+      likeCount,
       postedBy: payload.user,
     });
     return issue;
@@ -137,7 +138,7 @@ module.exports = {
     }
   },
 
-  //Liking
+  //Liking & disliking
   likePost: async (_, { issueId }, context) => {
     const { payload } = context;
     if (!payload) {
@@ -153,12 +154,47 @@ module.exports = {
         issue.likes = issue.likes.filter(
           (like) => like.likedBy.valueOf() !== payload.user._id
         );
+        issue.likeCount--;
       } else {
         // Like if not liked
         const likedBy = payload.user._id;
         issue.likes.push({
           likedBy,
         });
+        issue.likeCount++;
+      }
+      await issue.save();
+      return issue;
+    } else {
+      throw new UserInputError("Issue not found");
+    }
+  },
+
+  dislikePost: async (_, { issueId }, context) => {
+    const { payload } = context;
+    if (!payload) {
+      throw new AuthenticationError("No Token");
+    }
+
+    const issue = await Issue.findById(issueId);
+    if (issue) {
+      if (
+        issue.dislikes.find(
+          (dislike) => dislike.dislikedBy.valueOf() === payload.user._id
+        )
+      ) {
+        // Unlike if liked
+        issue.dislikes = issue.dislikes.filter(
+          (dislike) => dislike.dislikedBy.valueOf() !== payload.user._id
+        );
+        issue.likeCount++;
+      } else {
+        // Like if not liked
+        const dislikedBy = payload.user._id;
+        issue.dislikes.push({
+          dislikedBy,
+        });
+        issue.likeCount--;
       }
       await issue.save();
       return issue;

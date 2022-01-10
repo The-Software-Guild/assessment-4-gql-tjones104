@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { gql, useMutation } from "@apollo/client";
 
 const POST_COMMENT_MUTATION = gql`
@@ -17,10 +16,6 @@ const POST_COMMENT_MUTATION = gql`
 `;
 
 const PostComment = (props) => {
-  const navigate = useNavigate();
-
-  const token = localStorage.getItem("Token");
-
   const [formState, setFormState] = useState({
     description: "",
   });
