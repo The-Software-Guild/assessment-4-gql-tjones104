@@ -2,6 +2,7 @@ import React from "react";
 import { MockedProvider } from "@apollo/client/testing";
 import GetIssues, { ISSUE_QUERY } from "./../getIssues";
 import renderer from "react-test-renderer";
+import { gql, useQuery } from "@apollo/client";
 
 const mocks = [
   {

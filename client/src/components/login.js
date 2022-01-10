@@ -33,6 +33,9 @@ const Login = () => {
       context.login(login);
       navigate("/");
     },
+    onError: (error) => {
+      alert(error);
+    },
   });
 
   return (

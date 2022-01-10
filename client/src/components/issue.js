@@ -13,6 +13,7 @@ const Issue = ({
     description,
     createdAt,
     postedBy: { username },
+    voteCount,
     likeCount,
     dislikeCount,
     commentCount,
@@ -37,16 +38,14 @@ const Issue = ({
             id={id}
             likes={issue.likes}
             dislikes={issue.dislikes}
-            likeCount={likeCount}
-            dislikeCount={dislikeCount}
+            voteCount={voteCount}
           />
         ) : (
           <VoteButtons
             id={id}
             likes={issue.likes}
             dislikes={issue.dislikes}
-            likeCount={likeCount}
-            dislikeCount={dislikeCount}
+            voteCount={voteCount}
           />
         )}
         <div

@@ -19,6 +19,7 @@ const typeDefs = gql`
     comments: [Comment]!
     likes: [Like]!
     dislikes: [Dislike]!
+    voteCount: Int!
     likeCount: Int!
     dislikeCount: Int!
     commentCount: Int!
@@ -53,6 +54,7 @@ const typeDefs = gql`
     register(username: String!, password: String!, email: String!): AuthPayload!
     login(email: String!, password: String!): AuthPayload!
     postIssue(title: String!, description: String!): Issue!
+    updateIssue(id: ID!, title: String!, description: String!): String!
     deleteIssue(id: ID!): String!
     postComment(issueId: ID!, description: String!): Issue!
     deleteComment(issueId: ID!, commentId: ID!): Issue!

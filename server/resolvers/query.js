@@ -26,7 +26,7 @@ module.exports = {
   getIssues: async () => {
     try {
       const issues = await Issue.find()
-        .sort({ likeCount: -1 })
+        .sort({ voteCount: -1 })
         .populate([
           "postedBy",
           { path: "comments", populate: { path: "commentedBy" } },
@@ -46,7 +46,7 @@ module.exports = {
     const id = payload.user._id;
     try {
       const issues = await Issue.find({ postedBy: id })
-        .sort({ likeCount: -1 })
+        .sort({ voteCount: -1 })
         .populate([
           "postedBy",
           { path: "comments", populate: { path: "commentedBy" } },

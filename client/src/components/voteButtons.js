@@ -19,9 +19,10 @@ const DISLIKE_MUTATION = gql`
   }
 `;
 
-const VoteButtons = ({ id, likes, dislikes, likeCount, dislikeCount }) => {
+const VoteButtons = ({ id, likes, dislikes, voteCount }) => {
   const [likestyle, setLikestyle] = useState("like-button");
   const [dislikestyle, setDislikestyle] = useState("dislike-button");
+
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
 
@@ -65,8 +66,10 @@ const VoteButtons = ({ id, likes, dislikes, likeCount, dislikeCount }) => {
         likestyle === "like-button" &&
         dislikestyle === "disliked-button"
       ) {
-        dislikePost();
         likePost();
+        setTimeout(() => {
+          dislikePost();
+        }, 100);
         setDislikestyle("dislike-button");
         setLikestyle("liked-button");
       } else {
@@ -88,8 +91,10 @@ const VoteButtons = ({ id, likes, dislikes, likeCount, dislikeCount }) => {
         dislikestyle === "dislike-button" &&
         likestyle === "liked-button"
       ) {
-        likePost();
         dislikePost();
+        setTimeout(() => {
+          likePost();
+        }, 100);
         setLikestyle("like-button");
         setDislikestyle("disliked-button");
       } else {
@@ -108,7 +113,7 @@ const VoteButtons = ({ id, likes, dislikes, likeCount, dislikeCount }) => {
           Like
         </button>
       </div>
-      <p>{likeCount - dislikeCount}</p>
+      <p>{voteCount}</p>
       <div className="dislike">
         <button className={dislikestyle} onClick={(e) => handleDislike(e)}>
           Dislike

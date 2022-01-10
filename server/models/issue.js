@@ -9,7 +9,7 @@ const issueSchema = new Schema(
     title: { type: String },
     description: { type: String },
     createdAt: { type: Date },
-    likeCount: { type: Number },
+    voteCount: { type: Number },
     likes: [Like],
     dislikes: [Dislike],
     comments: [Comment],
