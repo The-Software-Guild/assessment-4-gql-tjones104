@@ -1,16 +1,16 @@
-require("dotenv").config();
-const express = require("express");
-const morgan = require("morgan");
-const cors = require("cors");
+require('dotenv').config();
+const express = require('express');
+const morgan = require('morgan');
+const cors = require('cors');
 const environment = process.env.NODE_ENV; // development
-const stage = require("./config")[environment];
-const { ApolloServer } = require("apollo-server-express");
-const mongoose = require("mongoose");
-const { validateToken } = require("./utils");
-const typeDefs = require("./schema");
-const Query = require("./resolvers/query");
-const Mutation = require("./resolvers/mutation");
-const Issue = require("./resolvers/counts");
+const stage = require('./config')[environment];
+const { ApolloServer } = require('apollo-server-express');
+const mongoose = require('mongoose');
+const { validateToken } = require('./utils');
+const typeDefs = require('./schema');
+const Query = require('./resolvers/query');
+const Mutation = require('./resolvers/mutation');
+const Issue = require('./resolvers/counts');
 
 // resolvers
 const resolvers = {
@@ -35,14 +35,14 @@ const startApolloServer = async (typeDefs, resolvers) => {
   });
 
   // logger
-  if (environment === "development") {
+  if (environment === 'development') {
     //app.use(morgan("dev"));
   }
 
   // database connection startup
   await mongoose
     .connect(process.env.MONGO_LOCAL_CONN_URL)
-    .then((result) => console.log("Connected to the database"))
+    .then((result) => console.log('Connected to the database'))
     .catch((err) => console.log(err));
 
   // application level middleware
@@ -58,7 +58,6 @@ const startApolloServer = async (typeDefs, resolvers) => {
   await server.start();
   server.applyMiddleware({
     app,
-    path: "/",
   });
 
   // modified server startup

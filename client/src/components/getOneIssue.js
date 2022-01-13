@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from 'react';
 
-import { gql, useQuery } from "@apollo/client";
-import Issue from "./issue";
+import { gql, useQuery } from '@apollo/client';
+import Issue from './issue';
 
 const ONE_ISSUE_QUERY = gql`
   query OneIssueQuery($id: ID!) {
@@ -32,8 +32,6 @@ const ONE_ISSUE_QUERY = gql`
         }
       }
       voteCount
-      likeCount
-      dislikeCount
       commentCount
     }
   }
@@ -44,6 +42,7 @@ const GetOneIssue = (issue) => {
     data: query,
     loading,
     error,
+    refetch,
   } = useQuery(ONE_ISSUE_QUERY, {
     variables: {
       id: issue.id,

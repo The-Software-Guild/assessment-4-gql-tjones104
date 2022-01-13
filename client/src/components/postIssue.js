@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { gql, useMutation } from "@apollo/client";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { gql, useMutation } from '@apollo/client';
 
 const POST_ISSUE_MUTATION = gql`
   mutation PostIssueMutation($title: String!, $description: String!) {
@@ -10,11 +10,11 @@ const POST_ISSUE_MUTATION = gql`
   }
 `;
 
-const PostIssue = (props) => {
+const PostIssue = () => {
   const navigate = useNavigate();
   const [formState, setFormState] = useState({
-    title: "",
-    description: "",
+    title: '',
+    description: '',
   });
   const [postIssue] = useMutation(POST_ISSUE_MUTATION, {
     variables: {
@@ -22,15 +22,15 @@ const PostIssue = (props) => {
       description: formState.description,
     },
     onCompleted: () => {
-      navigate("/");
+      navigate('/');
     },
   });
 
   return (
-    <div className="post-item">
+    <div className='post-item'>
       <h2>Add an Issue</h2>
       <form
-        className="post-form"
+        className='post-form'
         onSubmit={(e) => {
           e.preventDefault();
           postIssue();
@@ -38,9 +38,9 @@ const PostIssue = (props) => {
       >
         <label>Title:</label>
         <input
-          type="text"
-          name="title"
-          placeholder="eye catching title"
+          type='text'
+          name='title'
+          placeholder='eye catching title'
           value={formState.title}
           onChange={(e) =>
             setFormState({
@@ -52,9 +52,9 @@ const PostIssue = (props) => {
         />
         <label>Description:</label>
         <input
-          type="text"
-          name="description"
-          placeholder="something interesting"
+          type='text'
+          name='description'
+          placeholder='something interesting'
           value={formState.description}
           onChange={(e) =>
             setFormState({

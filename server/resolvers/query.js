@@ -1,6 +1,6 @@
-const User = require("../models/user");
-const Issue = require("../models/issue");
-const { AuthenticationError } = require("apollo-server-express");
+const User = require('../models/user');
+const Issue = require('../models/issue');
+const { AuthenticationError } = require('apollo-server-express');
 
 module.exports = {
   getUsers: async () => {
@@ -17,7 +17,7 @@ module.exports = {
       if (user) {
         return user;
       } else {
-        throw new Error("User not found");
+        throw new Error('User not found');
       }
     } catch (err) {
       throw new Error(err);
@@ -28,10 +28,10 @@ module.exports = {
       const issues = await Issue.find()
         .sort({ voteCount: -1 })
         .populate([
-          "postedBy",
-          { path: "comments", populate: { path: "commentedBy" } },
-          { path: "likes", populate: { path: "likedBy" } },
-          { path: "dislikes", populate: { path: "dislikedBy" } },
+          'postedBy',
+          { path: 'comments', populate: { path: 'commentedBy' } },
+          { path: 'likes', populate: { path: 'likedBy' } },
+          { path: 'dislikes', populate: { path: 'dislikedBy' } },
         ]);
       return issues;
     } catch (err) {
@@ -41,17 +41,17 @@ module.exports = {
   getUserIssues: async (_, args, context) => {
     const { payload } = context;
     if (!payload) {
-      throw new AuthenticationError("No Token");
+      throw new AuthenticationError('No Token');
     }
     const id = payload.user._id;
     try {
       const issues = await Issue.find({ postedBy: id })
         .sort({ voteCount: -1 })
         .populate([
-          "postedBy",
-          { path: "comments", populate: { path: "commentedBy" } },
-          { path: "likes", populate: { path: "likedBy" } },
-          { path: "dislikes", populate: { path: "dislikedBy" } },
+          'postedBy',
+          { path: 'comments', populate: { path: 'commentedBy' } },
+          { path: 'likes', populate: { path: 'likedBy' } },
+          { path: 'dislikes', populate: { path: 'dislikedBy' } },
         ]);
       return issues;
     } catch (err) {
@@ -61,15 +61,15 @@ module.exports = {
   getOneIssue: async (_, { id }) => {
     try {
       const issue = await Issue.findById(id).populate([
-        "postedBy",
-        { path: "comments", populate: { path: "commentedBy" } },
-        { path: "likes", populate: { path: "likedBy" } },
-        { path: "dislikes", populate: { path: "dislikedBy" } },
+        'postedBy',
+        { path: 'comments', populate: { path: 'commentedBy' } },
+        { path: 'likes', populate: { path: 'likedBy' } },
+        { path: 'dislikes', populate: { path: 'dislikedBy' } },
       ]);
       if (issue) {
         return issue;
       } else {
-        throw new Error("Post not found");
+        throw new Error('Post not found');
       }
     } catch (err) {
       throw new Error(err);
